@@ -1,18 +1,30 @@
-var http = require('http');
-var express = require('express');
-var twilio = require('twilio');
+const http = require('http');
+const express = require('express');
+const bodyParser = require('body-parser');
+const MessagingResponse = require('twilio').twiml.MessagingResponse;
 
-var app = express();
+const app = express();
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
-app.post('/sms', function(req, res) {
-  var twilio = require('twilio');
-  var twiml = new twilio.TwimlResponse();
-  twiml.message('The Robots are coming! Head for the hills!');
-  res.writeHead(200, {'Content-Type': 'text/xml'});
+app.post('/sms', (req, res) => {
+  const twiml = new MessagingResponse();
+
+  if ( (req.body.Body == ('hello')) || (req.body.Body == ('Hello')) ) {
+    twiml.message('Hi!');
+  } else if ( (req.body.Body == 'bye') || (req.body.Body == 'Bye') ) {
+    twiml.message('Goodbye');
+  } else {
+    twiml.message('It\'s the apocalypse! Go to the shelter!');
+  }
+
+  res.writeHead(200, {
+    'Content-Type': 'text/xml'
+  });
   res.end(twiml.toString());
 });
 
-http.createServer(app).listen(1337, function () {
-  console.log("Express server listening on port 1337");
+http.createServer(app).listen(1337, () => {
+  console.log('Express server listening on port 1337');
 });
-
