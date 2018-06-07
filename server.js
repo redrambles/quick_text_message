@@ -7,7 +7,7 @@ const app = express();
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-
+// Remember to go check the read me
 app.post('/sms', (req, res) => {
   const twiml = new MessagingResponse();
 
