@@ -1,4 +1,4 @@
-Hiya!
+Hiya, gorgeous! <3
 
 This is a short node program that allows you to send a message using Twilio via the command line.
 
